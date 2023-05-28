@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Song</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .border-bottom {
+            border-bottom: 1px solid;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <%- include('./components/_navbar.ejs', { currentUrl: req.url }) %>
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-6">Create Song</h2>
+                <div class="mb-4">
+                    <% if (typeof errorMsg !=='undefined' && errorMsg && errorMsg.length) { %>
+                        <%- include('./components/_alerts.ejs', { message: errorMsg, type: 'red-500' }) %>
+                            <% } %>
+                                <% if (typeof successMsg !=='undefined' && successMsg && successMsg.length) { %>
+                                    <%- include('./components/_alerts.ejs', { message: successMsg, type: 'green-500' })
+                                        %>
+                                        <% } %>
+                </div>
+                <form action="/store-song" method="POST" enctype="multipart/form-data">
+                    <div class="mb-4">
+
+                        <input type="text" id="name" name="name" placeholder="Name"
+                            class="border-bottom w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+
+                        <input type="text" id="genre" name="genre" placeholder="Genre"
+                            class="border-bottom w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+
+                        <input type="text" id="artist" name="artist" placeholder="Artist"
+                            class="border-bottom w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+
+                        <input type="text" id="album" name="album" placeholder="Album"
+                            class="border-bottom w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="language" name="language" placeholder="Language"
+                            class="border-bottom w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="mb-4">
+                        <label for="file" class="block text-gray-700 font-bold mb-2">File</label>
+                        <input type="file" id="file" name="file"
+                            class="w-full border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit"
+                            class="float-right bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+
+</html>

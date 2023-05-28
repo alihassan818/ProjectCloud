@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-service-deployment
+  labels:
+    app: playlist-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-service
+  template:
+    metadata:
+      labels:
+        app: playlist-service
+    spec:
+      containers:
+        - name: playlist-service
+          image: localhost:5000/playlist-service:latest
+          ports:
+            - containerPort: 3309
+          env:
+            - name: PORT
+              value: "3309"
+            - name: JWT_SECRET_KEY
+              value: "Z6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUX"
+            - name: DB_CONNECTION_URL
+              value: "mongodb://mongodb/playlist"

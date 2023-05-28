@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Music Page</title>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <%- include('./components/_navbar.ejs', { currentUrl: req.url }) %>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-4">
+            <div class="mb-4">
+                <form action="/songs" method="get" id="form-search">
+                    <input type="text" name="search" value="<%=search%>" style="border-bottom:1px solid"
+                        class="w-full px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                        placeholder="Search Songs">
+                </form>
+            </div>
+            <div class="mb-4">
+                <% if (typeof errorMsg !=='undefined' && errorMsg && errorMsg.length) { %>
+                    <%- include('./components/_alerts.ejs', { message: errorMsg, type: 'red-500' }) %>
+                        <% } %>
+                            <% if (typeof successMsg !=='undefined' && successMsg && successMsg.length) { %>
+                                <%- include('./components/_alerts.ejs', { message: successMsg, type: 'green-500' }) %>
+                                    <% } %>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Card 1 -->
+                <% songs.forEach((song)=> { %>
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-semibold">
+                                <%= song.name%>
+                            </h2>
+                            <span class="text-sm text-gray-500">
+                                <%= song.genre%>
+                            </span>
+                        </div>
+
+                        <audio controls class="w-full">
+                            <source src="<%= song.data_ref %>" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+
+
+                        <div class="mt-2 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">
+                                    <%= song.artist %>
+                                </p>
+                                <p class="text-sm text-gray-500">
+                                    <%= song.album %>
+                                </p>
+                            </div>
+                            <a href="/to-playlist/<%= song._id %>" class="text-sm text-gray-500">Add to playlist</a>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var inputTimeout; // Variable to store the timeout ID
+
+                // Handle form submission
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    $('#form-search').submit();
+                    console.log('Form submitted');
+                }
+
+                // Debounced form submission
+                function debouncedSubmit(event) {
+                    clearTimeout(inputTimeout); // Clear the previous timeout
+
+                    inputTimeout = setTimeout(function () {
+                        handleSubmit(event); // Invoke the debounced form submission
+                    }, 500); // Set the debounce delay (adjust as needed)
+                }
+
+                // Handle input change
+                $('input').on('input', function (event) {
+                    debouncedSubmit(event); // Invoke the debounced form submission on input change
+                });
+            });
+
+        </script>
+</body>
+
+</html>

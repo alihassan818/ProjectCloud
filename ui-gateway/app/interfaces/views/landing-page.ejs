@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .card {
+            width: 35rem;
+        }
+    </style>
+    <title>Music</title>
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white shadow-lg rounded-lg p-8 card">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <% if (typeof errorMsg !=='undefined' && errorMsg && errorMsg.length) { %>
+                <%- include('./components/_alerts.ejs', { message: errorMsg, type: 'red-500' }) %>
+                    <% } %>
+                        <% if (typeof successMsg !=='undefined' && successMsg && successMsg.length) { %>
+                            <%- include('./components/_alerts.ejs', { message: successMsg, type: 'green-500' }) %>
+                                <% } %>
+                                    <form action="/login" method="post">
+                                        <div class="relative mb-6">
+                                            <input
+                                                class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 transition-all duration-300"
+                                                type="text" placeholder="Email" name="email"
+                                                onfocus="this.placeholder=''" onblur="this.placeholder='Email'" />
+                                            <label
+                                                class="absolute left-3 -top-3 bg-white px-1 text-xs text-gray-500 transition-all duration-300"
+                                                for="email">Email</label>
+                                        </div>
+                                        <div class="relative mb-8">
+                                            <input
+                                                class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 transition-all duration-300"
+                                                type="password" placeholder="Password" name="password"
+                                                onfocus="this.placeholder=''" onblur="this.placeholder='Password'" />
+                                            <label
+                                                class="absolute left-3 -top-3 bg-white px-1 text-xs text-gray-500 transition-all duration-300"
+                                                for="password">Password</label>
+                                        </div>
+
+                                        <button
+                                            class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md w-full">Login</button>
+                                    </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script>
+        $('.close').on('click', function () {
+            $(this).parent('div').remove();
+        });
+    </script>
+</body>
+
+</html>

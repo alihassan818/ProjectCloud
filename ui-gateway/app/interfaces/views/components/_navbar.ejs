@@ -1,0 +1,16 @@
+<nav class="flex items-center justify-between bg-gray-900 text-white p-4 px-20">
+    <div>
+        <h1 class="text-2xl font-bold">Music</h1>
+    </div>
+    <div class="space-x-4">
+        <a href="/songs" class="<%= currentUrl === '/songs' ? 'text-blue-500' : 'text-white' %>">Songs</a>
+        <% if (req.usertype !=='operator' ) { %>
+            <a href="/playlist" class="<%= currentUrl === '/playlist' ? 'text-blue-500' : 'text-white' %>">Playlists</a>
+            <% }else{ %>
+                <a href="/create-song"
+                    class="<%= currentUrl === '/create-song' ? 'text-blue-500' : 'text-white' %>">Create Song</a>
+                <% } %>
+                    <a href="/logout"
+                        class="<%= currentUrl === '/logout' ? 'text-blue-500' : 'text-white' %>">Logout</a>
+    </div>
+</nav>

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-gateway-service-deployment
+  labels:
+    app: ui-gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-gateway-service
+  template:
+    metadata:
+      labels:
+        app: ui-gateway-service
+    spec:
+      containers:
+        - name: ui-gateway-service
+          image: localhost:5000/ui-gateway-service:latest
+          ports:
+            - containerPort: 3310
+          env:
+            - name: PORT
+              value: "3310"
+            - name: JWT_SECRET_KEY
+              value: "Z6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUX"
+            - name: HEX_SESSION
+              value: "7f0c1e875b67e24e19d3e69cc1a92f44c56de9baf37ed8438a9e1de22d69953f"
+            - name: LOGIN_SERVICE
+              value: "http://login-service:3306" # Update the URL to the login-service URL
+            - name: PLAYLIST_SERVICE
+              value: "http://playlist-service:3309" # Update the URL to the playlist-service URL
+            - name: SONG_SERVICE
+              value: "http://song-service:3308" # Update the URL to the song-service URL

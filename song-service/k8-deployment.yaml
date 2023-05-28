@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: song-service-deployment
+  labels:
+    app: song-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: song-service
+  template:
+    metadata:
+      labels:
+        app: song-service
+    spec:
+      containers:
+        - name: song-service
+          image: localhost:5000/song-service:latest
+          ports:
+            - containerPort: 3308
+          env:
+            - name: PORT
+              value: "3308"
+            - name: JWT_SECRET_KEY
+              value: "Z6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUXqrtxi5Ue8iBDTulRwyQ4MZ6JUX"
+            - name: DB_CONNECTION_URL
+              value: "mongodb://mongodb/songs-db"

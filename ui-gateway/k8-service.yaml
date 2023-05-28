@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-gateway-service
+spec:
+  selector:
+    app: ui-gateway-service
+  ports:
+    - protocol: TCP
+      port: 3310
+      targetPort: 3310
+  type: LoadBalancer
